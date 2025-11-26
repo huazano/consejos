@@ -5,9 +5,9 @@
         $percentage = $totalMembers > 0 ? round(($attendedMembers / $totalMembers) * 100) : 0;
     @endphp
 
-    <div class="w-full bg-gray-200 h-8 relative flex items-center justify-center">
+    <div class="w-full bg-gray-200 h-24 relative flex items-center justify-center">
         <div class="bg-green-500 h-full transition-all duration-500 absolute left-0 top-0" style="width: {{ $percentage }}%"></div>
-        <span class="relative z-10 font-bold text-black">{{ $attendedMembers }} / {{ $totalMembers }} ({{ $percentage }}%)</span>
+        <span class="relative z-10 font-bold text-black text-4xl">{{ $attendedMembers }} / {{ $totalMembers }} ({{ $percentage }}%)</span>
     </div>
 
     <div class="container mx-auto px-4 py-8 h-full flex items-center justify-center">
