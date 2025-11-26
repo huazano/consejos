@@ -16,52 +16,20 @@
                             @if ($user)
                                 @php
                                     $imagePath = $user->profile_photo_path;
-                                    $imageUrl = Storage::url($imagePath);
+                                    $webpPath = preg_replace('/\.(jpg|jpeg|png|gif)$/i', '.webp', $imagePath);
+                                    $fullPath = storage_path('app/public/' . $imagePath);
+                                    $fullWebpPath = storage_path('app/public/' . $webpPath);
 
-                                    // Check if the image is not already in webp format
-                                    if (!str_ends_with($imagePath, '.webp')) {
-                                        // Get the full path of the image
-                                        $fullPath = storage_path('app/public/' . $imagePath);
-
-                                        // Generate webp filename
-                                        $webpPath = preg_replace('/\.(jpg|jpeg|png|gif)$/i', '.webp', $imagePath);
-                                        $fullWebpPath = storage_path('app/public/' . $webpPath);
-
-                                        // Check if webp version already exists
-                                        if (!file_exists($fullWebpPath) && file_exists($fullPath)) {
-                                            try {
-                                                // Load the original image
-                                                $image = null;
-                                                $extension = strtolower(pathinfo($fullPath, PATHINFO_EXTENSION));
-
-                                                switch ($extension) {
-                                                    case 'jpg':
-                                                    case 'jpeg':
-                                                        $image = imagecreatefromjpeg($fullPath);
-                                                        break;
-                                                    case 'png':
-                                                        $image = imagecreatefrompng($fullPath);
-                                                        break;
-                                                    case 'gif':
-                                                        $image = imagecreatefromgif($fullPath);
-                                                        break;
-                                                }
-
-                                                // Convert to webp if image was successfully loaded
-                                                if ($image !== null) {
-                                                    imagewebp($image, $fullWebpPath, 80);
-                                                    imagedestroy($image);
-                                                }
-                                            } catch (\Exception $e) {
-                                                // If conversion fails, continue with original image
-                                            }
-                                        }
-
-                                        // Use webp if it exists, otherwise use original
-                                        if (file_exists($fullWebpPath)) {
-                                            $imageUrl = Storage::url($webpPath);
+                                    if (!file_exists($fullWebpPath) && file_exists($fullPath)) {
+                                        try {
+                                            \Intervention\Image\Facades\Image::make($fullPath)
+                                                ->encode('webp', 80)
+                                                ->save($fullWebpPath);
+                                        } catch (\Exception $e) {
                                         }
                                     }
+
+                                    $imageUrl = file_exists($fullWebpPath) ? Storage::url($webpPath) : Storage::url($imagePath);
                                 @endphp
                                 <img src="{{ $imageUrl }}"
                                     class="max-h-full max-w-full max-h-full m-auto shadow-lg border border-gray-300 imgDNE"
