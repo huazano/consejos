@@ -1,4 +1,15 @@
 <div class="w-full bg-gradient-to-br from-blue-50 to-indigo-100" style="height: 100vh;">
+    @php
+        $totalMembers = $event->guests()->where('is_member', true)->count();
+        $attendedMembers = $event->guests()->where('is_member', true)->whereNotNull('attendance_door_id')->count();
+        $percentage = $totalMembers > 0 ? round(($attendedMembers / $totalMembers) * 100) : 0;
+    @endphp
+
+    <div class="w-full bg-gray-200 h-8 relative flex items-center justify-center">
+        <div class="bg-green-500 h-full transition-all duration-500 absolute left-0 top-0" style="width: {{ $percentage }}%"></div>
+        <span class="relative z-10 font-bold text-black">{{ $attendedMembers }} / {{ $totalMembers }} ({{ $percentage }}%)</span>
+    </div>
+
     <div class="container mx-auto px-4 py-8 h-full flex items-center justify-center">
         <!-- Grid de invitados -->
         <div class="grid grid-cols-2 gap-8 w-full" style="max-height: 100vh;">

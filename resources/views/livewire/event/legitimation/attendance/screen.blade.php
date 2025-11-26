@@ -1,8 +1,20 @@
 <div>
+    @php
+        $totalMembers = $door->location->event->guests()->where('is_member', true)->count();
+        $attendedMembers = $door->location->event->guests()->where('is_member', true)->whereNotNull('attendance_door_id')->count();
+        $percentage = $totalMembers > 0 ? round(($attendedMembers / $totalMembers) * 100) : 0;
+    @endphp
+
+    <div class="w-full bg-gray-200 h-2">
+        <div class="bg-green-500 h-full transition-all duration-500" style="width: {{ $percentage }}%"></div>
+    </div>
 
     <div class="w-full" style="height: 100vh">
         <div class="text-center font-bold text-3xl">
             Control de Accesos
+            <div class="text-2xl mt-2">
+                Asistencia: {{ $attendedMembers }} / {{ $totalMembers }} ({{ $percentage }}%)
+            </div>
         </div>
         <div class="flex" style="height:calc(100vh - 150px)">
             <div class="w-full flex p-3">
