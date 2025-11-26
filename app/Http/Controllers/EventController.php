@@ -67,6 +67,11 @@ class EventController extends Controller
         return view('event.legitimation.attendance.screen', compact('door'));
     }
 
+    public function guestDisplayScreen(Event $event)
+    {
+        return view('event.legitimation.attendance.guest-display', compact('event'));
+    }
+
     public function legitimationVotting(Event $event)
     {
         return view('event.legitimation.votting', compact('event'));

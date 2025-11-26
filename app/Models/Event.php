@@ -29,7 +29,7 @@ class Event extends Model
 
     public function guests()
     {
-        return $this->belongsToMany(User::class, 'guests', 'event_id')->withPivot(['location_id', 'door_id', 'attendance_location_id', 'attendance_door_id', 'manager_id']);
+        return $this->belongsToMany(User::class, 'guests', 'event_id')->withPivot(['location_id', 'door_id', 'attendance_location_id', 'attendance_door_id', 'manager_id', 'is_member']);
     }
 
     public function archives()

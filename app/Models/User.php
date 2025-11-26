@@ -105,7 +105,7 @@ class User extends Authenticatable
 
     public function events()
     {
-        return $this->belongsToMany(Event::class, 'guests', 'user_id')->withPivot(['location_id', 'door_id', 'attendance_location_id', 'attendance_door_id', 'manager_id']);
+        return $this->belongsToMany(Event::class, 'guests', 'user_id')->withPivot(['location_id', 'door_id', 'attendance_location_id', 'attendance_door_id', 'manager_id', 'is_member']);
     }
 
     public function location()
