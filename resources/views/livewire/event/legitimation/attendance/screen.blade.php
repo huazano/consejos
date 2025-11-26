@@ -14,24 +14,7 @@
                         <div class="absolute"
                             style="top: 50%; left:50%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);width:30%;">
                             @if ($user)
-                                @php
-                                    $imagePath = $user->profile_photo_path;
-                                    $webpPath = preg_replace('/\.(jpg|jpeg|png|gif)$/i', '.webp', $imagePath);
-                                    $fullPath = storage_path('app/public/' . $imagePath);
-                                    $fullWebpPath = storage_path('app/public/' . $webpPath);
-
-                                    if (!file_exists($fullWebpPath) && file_exists($fullPath)) {
-                                        try {
-                                            \Intervention\Image\Facades\Image::make($fullPath)
-                                                ->encode('webp', 80)
-                                                ->save($fullWebpPath);
-                                        } catch (\Exception $e) {
-                                        }
-                                    }
-
-                                    $imageUrl = file_exists($fullWebpPath) ? Storage::url($webpPath) : Storage::url($imagePath);
-                                @endphp
-                                <img src="{{ $imageUrl }}"
+                                <img src="{{ str_replace(['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'], '.webp', Storage::url($user->profile_photo_path)) }}"
                                     class="max-h-full max-w-full max-h-full m-auto shadow-lg border border-gray-300 imgDNE"
                                     alt="">
                             @endif
