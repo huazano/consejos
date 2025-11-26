@@ -7,7 +7,7 @@
                     <!-- Foto del usuario -->
                     <div class="w-56 h-56 mb-6 rounded-full overflow-hidden border-4 border-indigo-500 shadow-lg">
                         @if($guest->profile_photo_path)
-                            <img src="{{ Storage::url($guest->profile_photo_path) }}"
+                            <img src="{{ str_replace(['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'], '.webp', Storage::url($guest->profile_photo_path)) }}"
                                  alt="{{ $guest->name }}"
                                  class="w-full h-full object-cover">
                         @else
