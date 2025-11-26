@@ -77,6 +77,11 @@ class EventController extends Controller
         return view('event.legitimation.attendance.attendance-stats', compact('event'));
     }
 
+    public function attendanceListScreen(Event $event)
+    {
+        return view('event.legitimation.attendance.attendance-list', compact('event'));
+    }
+
     public function legitimationVotting(Event $event)
     {
         return view('event.legitimation.votting', compact('event'));

@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum', 'verified', 'changepassword'])->group(functio
     Route::get('/legitimaciones/asistencia/puerta/{door}', [EventController::class, 'legitimationAttendanceScreen'])->name('legitimation.attendance.screen');
     Route::get('/legitimaciones/pantalla-invitados/{event}', [EventController::class, 'guestDisplayScreen'])->name('legitimation.guest.display');
     Route::get('/legitimaciones/estadisticas-asistencia/{event}', [EventController::class, 'attendanceStatsScreen'])->name('legitimation.attendance.stats');
+    Route::get('/legitimaciones/lista-asistencia/{event}', [EventController::class, 'attendanceListScreen'])->name('legitimation.attendance.list');
     Route::get('/legitimaciones/padron/{event}', [EventController::class, 'legitimationGuests'])->name('legitimation.guests');
     Route::get('/legitimaciones/sedes/{event}', [EventController::class, 'legitimationLocations'])->name('legitimation.locations');
     Route::get('/legitimaciones/sedes/{event}/{location}', [EventController::class, 'legitimationLocation'])->name('legitimation.locations.location');
